@@ -10,7 +10,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 player_log = logging.getLogger("Player 1")
 
-usb = "../snt/usb"
+usb = "../snt/usb/"
 valid_format = ['avi', 'mov', 'mkv', 'mp4']
 files_valid = []
 viewed = 0
@@ -22,19 +22,18 @@ if os.path.exists(usb):
     # Проверяем формат и опредиляем продолжительность
     for i in files_usb:
         x = []
-        if i not in files_valid[][0]:
-            if i.split('.')[-1] in valid_format:
-                x.append(usb + i)
-                clip = VideoFileClip(x[0])
-                x.append(clip.duration)
-                clip.close()
-                files.append(x)
+        if i.split('.')[-1] in valid_format:
+            x.append(usb + i)
+            clip = VideoFileClip(x[0])
+            x.append(clip.duration)
+            clip.close()
+            files_valid.append(x)
 else:
     print ('Объект не найден')
 
 while True:
     if files_valid[viewed][0]:
-        player = OMXPlayer(files, args=['--no-osd', '--no-keys', '-b'])
+        player = OMXPlayer(files_valid, args=['--no-osd', '--no-keys'])
         # dbus_name='org.mpris.MediaPlayer2.omxplayer1'
         # player.playEvent += lambda _: player_log.info("Play")
         # player.pauseEvent += lambda _: player_log.info("Pause")
@@ -47,7 +46,7 @@ while True:
         # Ждем пока закончится вмдео
         sleep(files_valid[viewed][1])
         viewed +=1
-    elif:
+    else:
         print("Видеофайлов нет")
         break
         
